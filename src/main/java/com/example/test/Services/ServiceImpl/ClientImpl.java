@@ -1,11 +1,14 @@
 package com.example.test.Services.ServiceImpl;
 
+import com.example.test.Enum.CategorieClient;
 import com.example.test.Models.Client;
+import com.example.test.Models.Facture;
 import com.example.test.Repositories.ClientRepo;
 import com.example.test.Services.ServiceInterface.ClientInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -38,4 +41,23 @@ public class ClientImpl implements ClientInterface {
     public Client retrieveClient(Long id) {
         return clientRepo.findById(id).orElse(null);
     }
-}
+
+    @Override
+    public float getChiffreAffaireParCategorieClient(CategorieClient categorieClient, Date startDate, Date endDate) {
+        List<Client> clients = clientRepo.findClientByCategorieClient(categorieClient);
+        float chiffre=0;
+        for(Client cs: clients){
+            for(Facture facture: cs.getFactures()){
+                if(facture.getDateFacture().after(startDate) &&facture.getDateFacture().before(endDate)){
+                    if(facture.isActive()) {
+                        chiffre+=facture.getMontantFacture();
+                    }
+                    }
+                }
+            }
+        return chiffre;
+        }
+
+
+    }
+

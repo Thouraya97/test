@@ -2,6 +2,7 @@ package com.example.test.Services.ServiceInterface;
 
 import com.example.test.Models.Produit;
 
+import java.util.Date;
 import java.util.List;
 
 public interface ProduitInterface {
@@ -11,4 +12,5 @@ public interface ProduitInterface {
 
     Produit retrieveProduit(Long id);
     public void assignFournisseurToProduit(Long fournisseurId, Long produitId) ;
+    float getRevenuBrutProduit(Long idProduit, Date startDate, Date endDate);
 }
