@@ -31,12 +31,15 @@ public class FactureImpl implements FactureInterface {
 
     @Override
     public void cancelFacture(Long id) {
-                factureRepo.deleteById(id);
+        Facture facture= factureRepo.findById(id).orElse(null);
+        facture.setActive(false);
+
+
     }
 
     @Override
     public Facture retrieveFacture(Long id) {
-        return null;
+        return factureRepo.findById(id).orElse(null);
     }
 
     @Override
